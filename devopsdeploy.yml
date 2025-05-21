@@ -1,0 +1,9 @@
+- name: Deploy Frontend Site using Docker
+  hosts: localhost
+  tasks:
+    - name: Stop existing container if running
+      command: docker rm -f jsweb_container
+      ignore_errors: yes
+
+    - name: Run new Docker container with the website
+      command: docker run -d -p 8080:80 --name jsweb_container jswebimg:latest

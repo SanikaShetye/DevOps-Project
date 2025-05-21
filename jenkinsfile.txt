@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_REPO = 'https://github.com/SanikaShetye/DevOps-Project.git'
+        LOCAL_DIR = 'E:\\DevOpsProject'
+        IMAGE_NAME = 'jswebimg:latest'
+        CONTAINER_NAME = 'jsweb_container'
+        WSL_ANSIBLE_SCRIPT = '/mnt/e/DevOpsProject/devopsdeploy.yml'
+    }
+
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo "Building Docker image..."
+                    bat "cd /d %LOCAL_DIR% && docker build -t %IMAGE_NAME% ."
+                }
+            }
+        }
+
+        stage('Deploy with Ansible on WSL') {
+            steps {
+                script {
+                    echo "Running Ansible playbook..."
+                    bat "wsl ansible-playbook %WSL_ANSIBLE_SCRIPT%"
+                }
+            }
+        }
+    }
+}

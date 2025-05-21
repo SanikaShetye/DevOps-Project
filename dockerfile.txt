@@ -1,0 +1,5 @@
+# Use a lightweight NGINX image
+FROM nginx:alpine
+
+# Copy all files from the project directory to the NGINX html directory
+COPY . /usr/share/nginx/html
